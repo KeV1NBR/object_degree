@@ -4,11 +4,10 @@ Library extend from https://github.com/AlexeyAB/darknet
 
 Using ALexeyAB's library and opencv to find the straight things angle
 
-Dependence
+Dependence:
 
+    cmake 
 
-cmake 
+    alexeyAB'darknet
 
-alexeyAB'darknet
-
-opencv3.4.2
+    opencv3.4.2
