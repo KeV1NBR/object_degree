@@ -10,7 +10,7 @@ struct bbox_t_deg {
     unsigned int track_id;        // tracking id for video (0 - untracked, 1 - inf - tracked object)
     unsigned int frames_counter;// counter of frames on which the object was detected
 
-    int degree;
+    double degree;
 };
 
 class Detector_deg : public Detector
