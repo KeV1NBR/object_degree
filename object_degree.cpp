@@ -3,7 +3,6 @@
 #define OPENCV
 #include <yolo_v2_class.hpp>
 
-#include "Camera.h"
 
 using namespace cv;
 using namespace std;
