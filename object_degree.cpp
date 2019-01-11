@@ -13,7 +13,7 @@ Detector_deg::Detector_deg(string cfg, string weight): Detector(cfg, weight)
 
 }
 
-vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres)
+vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale)
 {
     vector<bbox_t> darknet_predict;
     vector<bbox_t_deg> predict;
@@ -45,8 +45,8 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh, bool u
         Mat canny;
         Mat cannyBGR;
         vector<Vec2f> lines;
-        Canny(gray, canny, tweakData.thres1, tweakData.thres2);
-        HoughLines(canny, lines, (double)rho / tweakData.rhoScale, (double)theta / tweakData.thetaScale, lineThres);
+        Canny(gray, canny, thres1, thres2);
+        HoughLines(canny, lines, (double)rho / rhoScale, (double)theta / thetaScale, lineThres);
         cvtColor(canny, cannyBGR, COLOR_GRAY2BGR);
         drawLines(crop, lines);
         Mat combine = Mat::zeros(crop.rows + 20, crop.cols * 2, CV_8UC3);
