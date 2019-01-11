@@ -3,6 +3,7 @@
 #define OPENCV
 #include <yolo_v2_class.hpp>
 
+#include "object_degree.hpp"
 
 using namespace cv;
 using namespace std;
