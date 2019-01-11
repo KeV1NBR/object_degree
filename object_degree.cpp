@@ -13,7 +13,7 @@ Detector_deg::Detector_deg(string cfg, string weight): Detector(cfg, weight)
 
 }
 
-vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh = 0.2, bool use_mean = false)
+std::vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh = 0.2, bool use_mean = false)
 {
     vector<bbox_t> darknet_predict;
     vector<bbox_t_deg> predict;
