@@ -16,7 +16,7 @@ struct bbox_t_deg {
 class Detector_deg : public Detector
 {
 public:
-    Detector_deg(string cfg, string weight);
+    Detector_deg(std::string cfg, std::string weight);
     ~Detector_deg();
     std::vector<bbox_t_deg> detectWithDeg(std::string image_filename, float thresh = 0.2, bool use_mean = false);
 	std::vector<bbox_t_deg> detectWithDeg(image_t img, float thresh = 0.2, bool use_mean = false);
