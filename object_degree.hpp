@@ -1,5 +1,5 @@
-ifndef __OBJECT_DEGREE__
-define __OBJECT_DEGREE__
+#ifndef __OBJECT_DEGREE__
+#define __OBJECT_DEGREE__
 
 
 #include <iostream>
@@ -34,4 +34,4 @@ protected:
 
 };
 
-endif
+#endif
