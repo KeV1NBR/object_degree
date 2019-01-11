@@ -19,7 +19,7 @@ public:
     Detector_deg(std::string cfg, std::string weight);
     ~Detector_deg();
     
-	std::vector<bbox_t_deg> detectWithDeg(image_t img, float thresh = 0.2, bool use_mean = false, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale);
+	std::vector<bbox_t_deg> detectWithDeg(image_t img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale);
 
 
 protected:
