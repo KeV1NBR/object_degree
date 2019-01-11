@@ -13,7 +13,7 @@ Detector_deg::Detector_deg(string cfg, string weight): Detector(cfg, weight)
 
 }
 
-std::vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh = 0.2, bool use_mean = false)
+vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres)
 {
     vector<bbox_t> darknet_predict;
     vector<bbox_t_deg> predict;
@@ -46,14 +46,14 @@ std::vector<bbox_t_deg> Detector_deg::detectWithDeg(image_t img, float thresh = 
         Mat cannyBGR;
         vector<Vec2f> lines;
         Canny(gray, canny, tweakData.thres1, tweakData.thres2);
-        HoughLines(canny, lines, (double)tweakData.rho / tweakData.rhoScale, (double)tweakData.theta / tweakData.thetaScale, tweakData.lineThres);
+        HoughLines(canny, lines, (double)rho / tweakData.rhoScale, (double)theta / tweakData.thetaScale, lineThres);
         cvtColor(canny, cannyBGR, COLOR_GRAY2BGR);
         drawLines(crop, lines);
         Mat combine = Mat::zeros(crop.rows + 20, crop.cols * 2, CV_8UC3);
         crop.copyTo(combine(Rect(Point(), crop.size())));
         cannyBGR.copyTo(combine(Rect(Point(canny.cols, 0), canny.size())));
         predict[i].degree = calcDeg(lines);
-        putText(combine, std::to_string(degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
+        putText(combine, std::to_string(predict[i].degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
 
         imshow("Canny" + std::to_string(i), combine);
         i++;
