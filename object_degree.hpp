@@ -1,3 +1,7 @@
+ifndef __OBJECT_DEGREE__
+define __OBJECT_DEGREE__
+
+
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #define OPENCV
@@ -30,4 +34,4 @@ protected:
 
 };
 
-
+endif
