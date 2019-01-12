@@ -65,8 +65,31 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(Mat img, float thresh, bool use_m
     return predict;
 }
 
+double Detector_deg::detectSingleWithDeg(cv::Mat crop, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale)
+{
+    Mat gray;
+    cvtColor(crop, gray, COLOR_BGR2GRAY);
+    Mat canny;
+    Mat cannyBGR;
+    vector<Vec2f> lines;
+    double degree;
 
+    Canny(gray, canny, thres1, thres2);
+    HoughLines(canny, lines, (double)rho / rhoScale, (double)theta / thetaScale, lineThres);
+    cvtColor(canny, cannyBGR, COLOR_GRAY2BGR);
+    drawLines(crop, lines);
+    Mat combine = Mat::zeros(crop.rows + 20, crop.cols * 2, CV_8UC3);
+    crop.copyTo(combine(Rect(Point(), crop.size())));
+    cannyBGR.copyTo(combine(Rect(Point(canny.cols, 0), canny.size())));
+    degree = calcDeg(lines);
+    putText(combine, std::to_string(degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
 
+    imshow("Canny" + std::to_string(i), combine);
+    i++;
+
+return degree;
+
+}
 
 
 double Detector_deg::calcDeg(const std::vector<cv::Vec2f>& lines)

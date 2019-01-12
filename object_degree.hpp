@@ -25,6 +25,8 @@ public:
     
 	std::vector<bbox_t_deg> detectWithDeg(cv::Mat img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale);
 
+    double detectSingleWithDeg(cv::Mat img, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale);
+
 
 protected:
 
