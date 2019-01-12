@@ -85,10 +85,8 @@ double Detector_deg::detectSingleWithDeg(cv::Mat crop, float thresh, bool use_me
     putText(combine, std::to_string(degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
 
     imshow("Canny", combine);
-    i++;
 
-return degree;
-
+    return degree;
 }
 
 
