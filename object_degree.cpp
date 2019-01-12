@@ -65,7 +65,7 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(Mat img, float thresh, bool use_m
     return predict;
 }
 
-double Detector_deg::detectSingleWithDeg(cv::Mat crop, float thresh, bool use_mean, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale)
+double Detector_deg::detectSingleWithDeg(cv::Mat crop, int thres1, int thres2, int rho, int theta, int lineThres, int rhoScale, int thetaScale)
 {
     Mat gray;
     cvtColor(crop, gray, COLOR_BGR2GRAY);
