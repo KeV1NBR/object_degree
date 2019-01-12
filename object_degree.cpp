@@ -24,8 +24,7 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(Mat img, float thresh, bool use_m
     
     darknet_predict = detect(img, thresh,use_mean);
 
-    int i=0;
-    for(auto& item: darknet_predict)
+    for(int i=0; i<predict.size();i++)
     {
         predict[i].x = darknet_predict[i].x;
         predict[i].y = darknet_predict[i].y;
@@ -37,7 +36,7 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(Mat img, float thresh, bool use_m
         predict[i].frames_counter = darknet_predict[i].frames_counter;
     }
 
-    i=0;
+    i = 0;
     for(auto& item: darknet_predict)
     {
         Rect bbox(item.x, item.y, item.w, item.h);
