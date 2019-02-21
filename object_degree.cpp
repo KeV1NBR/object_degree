@@ -59,7 +59,7 @@ vector<bbox_t_deg> Detector_deg::detectWithDeg(Mat img, float thresh, bool use_m
         predict[i].degree = calcDeg(lines);
         putText(combine, std::to_string(predict[i].degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
 
-        imshow("Canny" + std::to_string(i), combine);
+        //imshow("Canny" + std::to_string(i), combine);
         i++;
     }
     return predict;
@@ -84,7 +84,7 @@ double Detector_deg::detectSingleWithDeg(cv::Mat crop, int thres1, int thres2, i
     degree = calcDeg(lines);
     putText(combine, std::to_string(degree), Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
 
-    imshow("Canny", combine);
+    //imshow("Canny", combine);
 
     return degree;
 }
@@ -124,7 +124,7 @@ void Detector_deg::drawLines(cv::Mat &input, const std::vector<cv::Vec2f> &lines
         float theta = lines[i][1];
         if(theta<CV_PI/4.0 || theta>3*CV_PI/4.0)
         {
-            cv::Point pt1(r/cos(theta),0);
+           cv::Point pt1(r/cos(theta),0);
             cv::Point pt2((r-input.rows*sin(theta))/cos(theta), input.rows);
             line(input, pt1, pt2, cv::Scalar(255,0,0), 1);
         } 
