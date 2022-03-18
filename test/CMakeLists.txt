@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 set(PROJECT_NAME cmake_test)
 set(PROJECT_LANGUAGE C CXX)
 set(PROJECT_DEPS
+    object_degree
     ${DARKNET_LIBRARIES}
     realsense_lib
     yaml-cpp

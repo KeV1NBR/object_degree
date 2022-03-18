@@ -22,11 +22,12 @@ Detector_deg::Detector_deg(string cfg, string weight) : Detector(cfg, weight) {}
 
 Detector_deg::~Detector_deg() {}
 
-std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& img) {
+std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& color,
+                                                    const Mat& depth) {
     vector<bbox_t> darknet_predict;
     vector<bbox_t_deg> predict;
 
-    darknet_predict = detect(img, 0.5);
+    darknet_predict = detect(color, 0.5);
 
     unsigned int i = 0;
     for (i = 0; i < predict.size(); i++) {
@@ -42,7 +43,7 @@ std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& img) {
 
     for (auto& item : predict) {
         Rect bbox(item.x, item.y, item.w, item.h);
-        Mat crop = img(bbox).clone();
+        Mat crop = depth(bbox).clone();
         item.degree = calcDeg(crop);
     }
     return predict;
