@@ -11,11 +11,14 @@ using namespace cv;
 using namespace rs2;
 using namespace realsense;
 
-void drawBoundingBox(cv::Mat image, bbox_t_deg boundingBox);
+void drawBoundingBox(cv::Mat& image, bbox_t_deg boundingBox);
 
 int main() {
-    RealSense rs;
-    Detector_deg detector("", "");
+    Config config;
+
+    RealSense rs(config);
+    Detector_deg detector("/home/qrobot/model/yolov4/yolov4-tiny.cfg",
+                          "/home/qrobot/model/yolov4/yolov4-tiny.weights");
 
     if (rs.depth_supports(RS2_OPTION_MIN_DISTANCE))
         rs.set_depth_option(RS2_OPTION_MIN_DISTANCE, 200);
@@ -35,6 +38,8 @@ int main() {
         std::vector<bbox_t_deg> predict =
             detector.detectWithDeg(color, depth_image);
 
+        cout << predict.size() << " " << color.rows << endl;
+
         for (auto p : predict) {
             drawBoundingBox(color, p);
             drawBoundingBox(depth_image, p);
@@ -43,14 +48,14 @@ int main() {
         imshow("color", color);
         imshow("depth", depth_image);
 
-        if (waitKey(1) == 27) break;
+        waitKey(30);
     }
 
     return 0;
 }
 
 /** Draw a bounding box onto a Mat, include drawing it's class name. */
-void drawBoundingBox(cv::Mat image, bbox_t_deg boundingBox) {
+void drawBoundingBox(cv::Mat& image, bbox_t_deg boundingBox) {
     cv::Rect rect(boundingBox.x, boundingBox.y, boundingBox.w, boundingBox.h);
     // Random select a color of bounding box
     int r = 50 + ((43 * (boundingBox.obj_id + 1)) % 150);

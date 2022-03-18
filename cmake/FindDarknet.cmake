@@ -1,9 +1,11 @@
 
 find_path(DARKNET_INCLUDE_DIRS yolo_v2_class.hpp
     "/home/kevin/api/darknet/include"
+    "/home/qrobot/api/darknet/include"
     )
 find_library(DARKNET_LIBRARIES libdarknet.so
     "/home/kevin/api/darknet"
+    "/home/qrobot/api/darknet"
     )
 include(FindPackageHandleStandardArgs)
 

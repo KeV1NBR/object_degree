@@ -25,12 +25,12 @@ Detector_deg::~Detector_deg() {}
 std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& color,
                                                     const Mat& depth) {
     vector<bbox_t> darknet_predict;
-    vector<bbox_t_deg> predict;
 
-    darknet_predict = detect(color, 0.5);
+    darknet_predict = detect(color, 0.1);
+    vector<bbox_t_deg> predict(darknet_predict.size());
 
     unsigned int i = 0;
-    for (i = 0; i < predict.size(); i++) {
+    for (i = 0; i < darknet_predict.size(); i++) {
         predict[i].x = darknet_predict[i].x;
         predict[i].y = darknet_predict[i].y;
         predict[i].w = darknet_predict[i].w;
@@ -57,12 +57,12 @@ double Detector_deg::calcDeg(Mat& crop) {
     Mat bw;
     threshold(gray, bw, 50, 255, THRESH_BINARY | THRESH_OTSU);
     // Find all the contours in the thresholded image
-    vector<vector<Point> > contours;
+    vector<vector<Point>> contours;
     findContours(bw, contours, RETR_LIST, CHAIN_APPROX_NONE);
 
-    vector<Point> pts;
+    vector<Point> pts = contours[0];
 
-    for (auto c : contours) pts = areaComp(pts, c) ? c : pts;
+    // for (auto c : contours) pts = (areaComp(pts, c) ? c : pts);
 
     // Construct a buffer used by the pca analysis
     int sz = static_cast<int>(pts.size());
