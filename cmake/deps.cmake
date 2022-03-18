@@ -22,6 +22,7 @@ include_directories(${DARKNET_INCLUDE_DIRS})
 find_package(realsense2 REQUIRED)
 include_directories(${REALSENSE_INCLUDE_DIR})
 
+find_package(OpenMP)
 
 # Add subdirectory
 foreach(DEPS_PATH ${DEPS_PATHS})

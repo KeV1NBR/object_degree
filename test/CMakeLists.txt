@@ -5,6 +5,8 @@ set(PROJECT_NAME cmake_test)
 set(PROJECT_LANGUAGE C CXX)
 set(PROJECT_DEPS
     ${DARKNET_LIBRARIES}
+    realsense_lib
+    yaml-cpp
     ${OpenCV_LIBS}
     )
 
