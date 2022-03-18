@@ -1,0 +1,3 @@
+[submodule "deps/realsense_lib"]
+	path = deps/realsense_lib
+	url = git@github.com:KeV1NBR/realsense_lib.git

@@ -21,49 +21,32 @@ double rad2Degree(double rad) { return rad * 180 / M_PI; };
 Detector_deg::Detector_deg(string cfg, string weight) : Detector(cfg, weight) {}
 
 Detector_deg::~Detector_deg() {}
-// bbox_t_deg Detector_deg::detectWithDeg(Mat img) {
-//    vector<bbox_t> darknet_predict;
-//    vector<bbox_t_deg> predict;
-//
-//    darknet_predict = detect(img, 0.5);
-//
-//    unsigned int i = 0;
-//    for (i = 0; i < predict.size(); i++) {
-//        predict[i].x = darknet_predict[i].x;
-//        predict[i].y = darknet_predict[i].y;
-//        predict[i].w = darknet_predict[i].w;
-//        predict[i].h = darknet_predict[i].h;
-//        predict[i].prob = darknet_predict[i].prob;
-//        predict[i].obj_id = darknet_predict[i].obj_id;
-//        predict[i].track_id = darknet_predict[i].track_id;
-//        predict[i].frames_counter = darknet_predict[i].frames_counter;
-//    }
-//
-//    i = 0;
-//    for (auto& item : darknet_predict) {
-//        Rect bbox(item.x, item.y, item.w, item.h);
-//        bbox.width = min(640 - bbox.x, bbox.width);
-//        bbox.height = min(480 - bbox.y, bbox.height);
-//        Mat crop = img(bbox).clone();
-//        Mat gray;
-//
-//        cvtColor(crop, gray, COLOR_BGR2GRAY);
-//
-//        cvtColor(canny, cannyBGR, COLOR_GRAY2BGR);
-//        drawLines(crop, lines);
-//
-//        Mat combine = Mat::zeros(crop.rows + 20, crop.cols * 2, CV_8UC3);
-//        crop.copyTo(combine(Rect(Point(), crop.size())));
-//        cannyBGR.copyTo(combine(Rect(Point(canny.cols, 0), canny.size())));
-//        predict[i].degree = calcDeg(lines);
-//        putText(combine, std::to_string(predict[i].degree),
-//                Point(0, crop.rows + 18), 0, 0.5, Scalar(255, 255, 255));
-//
-//        // imshow("Canny" + std::to_string(i), combine);
-//        i++;
-//    }
-//    return predict;
-//}
+
+std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& img) {
+    vector<bbox_t> darknet_predict;
+    vector<bbox_t_deg> predict;
+
+    darknet_predict = detect(img, 0.5);
+
+    unsigned int i = 0;
+    for (i = 0; i < predict.size(); i++) {
+        predict[i].x = darknet_predict[i].x;
+        predict[i].y = darknet_predict[i].y;
+        predict[i].w = darknet_predict[i].w;
+        predict[i].h = darknet_predict[i].h;
+        predict[i].prob = darknet_predict[i].prob;
+        predict[i].obj_id = darknet_predict[i].obj_id;
+        predict[i].track_id = darknet_predict[i].track_id;
+        predict[i].frames_counter = darknet_predict[i].frames_counter;
+    }
+
+    for (auto& item : predict) {
+        Rect bbox(item.x, item.y, item.w, item.h);
+        Mat crop = img(bbox).clone();
+        item.degree = calcDeg(crop);
+    }
+    return predict;
+}
 
 double Detector_deg::calcDeg(Mat& crop) {
     // Convert image to grayscale

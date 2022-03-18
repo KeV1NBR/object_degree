@@ -22,7 +22,7 @@ class Detector_deg : public Detector {
     Detector_deg(std::string cfg, std::string weight);
     ~Detector_deg();
 
-    std::vector<bbox_t_deg> detectWithDeg(cv::Mat img);
+    std::vector<bbox_t_deg> detectWithDeg(const cv::Mat& img);
 
     bbox_t_deg detectSingleWithDeg(cv::Mat img, uint objID);
 
