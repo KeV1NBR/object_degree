@@ -7,12 +7,11 @@
 #include <yolo_v2_class.hpp>
 
 #include "object_degree.h"
-
 using namespace cv;
 using namespace std;
 
 bool areaComp(const vector<Point>& lhs, const vector<Point>& rhs) {
-    return (contourArea(lhs) < contourArea(rhs)) ? true : false;
+    return lhs.size() < rhs.size() ? true : false;
 }
 
 double degree2Rad(double degree) { return degree * M_PI / 180; }
@@ -26,7 +25,7 @@ std::vector<bbox_t_deg> Detector_deg::detectWithDeg(const Mat& color,
                                                     const Mat& depth) {
     vector<bbox_t> darknet_predict;
 
-    darknet_predict = detect(color, 0.1);
+    darknet_predict = detect(color, 0.3);
     vector<bbox_t_deg> predict(darknet_predict.size());
 
     unsigned int i = 0;
@@ -60,9 +59,9 @@ double Detector_deg::calcDeg(Mat& crop) {
     vector<vector<Point>> contours;
     findContours(bw, contours, RETR_LIST, CHAIN_APPROX_NONE);
 
-    vector<Point> pts = contours[0];
+    vector<Point> pts;
 
-    // for (auto c : contours) pts = (areaComp(pts, c) ? c : pts);
+    for (auto c : contours) pts = (areaComp(pts, c) ? c : pts);
 
     // Construct a buffer used by the pca analysis
     int sz = static_cast<int>(pts.size());
@@ -86,6 +85,8 @@ double Detector_deg::calcDeg(Mat& crop) {
         eigen_val[i] = pca_analysis.eigenvalues.at<double>(i);
     }
 
-    return rad2Degree(
-        atan2(eigen_vecs[0].y, eigen_vecs[0].x));  // orientation in radians;
+    if (eigen_vecs[0].x > 0)
+        return -1 * rad2Degree(atan2(eigen_vecs[0].y, eigen_vecs[0].x));
+    else
+        return -1 * rad2Degree(atan2(-eigen_vecs[0].y, -eigen_vecs[0].x));
 }
