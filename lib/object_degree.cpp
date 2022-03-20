@@ -14,9 +14,6 @@ bool areaComp(const vector<Point>& lhs, const vector<Point>& rhs) {
     return lhs.size() < rhs.size() ? true : false;
 }
 
-double degree2Rad(double degree) { return degree * M_PI / 180; }
-double rad2Degree(double rad) { return rad * 180 / M_PI; };
-
 Detector_deg::Detector_deg(string cfg, string weight) : Detector(cfg, weight) {}
 
 Detector_deg::~Detector_deg() {}
@@ -86,7 +83,7 @@ double Detector_deg::calcDeg(Mat& crop) {
     }
 
     if (eigen_vecs[0].x > 0)
-        return -1 * rad2Degree(atan2(eigen_vecs[0].y, eigen_vecs[0].x));
+        return -1 * atan2(eigen_vecs[0].y, eigen_vecs[0].x) * 180 / M_PI;
     else
-        return -1 * rad2Degree(atan2(-eigen_vecs[0].y, -eigen_vecs[0].x));
+        return -1 * atan2(-eigen_vecs[0].y, -eigen_vecs[0].x) * 180 / M_PI;
 }
